@@ -1,6 +1,6 @@
 [MongoDB Associate DBA Exam](https://learn.mongodb.com/pages/mongodb-associate-database-administrator-exam)
 
-## Lab 2 - Deploy an Atlas Cluster
+## Creating and Deploying an Atlas Cluster
 
 ### Creating the cluster
 
@@ -50,3 +50,6 @@ db.accounts.find({account_id: 674364})
 - [MongoDB Docs: Deploy a Free Cluster](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster/?_ga=2.56158050.810066485.1665291537-836515500.1666025886)
 - [MongoDB Docs: Load Sample Data](https://www.mongodb.com/docs/atlas/sample-data/?_ga=2.56158050.810066485.1665291537-836515500.1666025886)
 
+
+## MongoDB and the Document Model
+### 
