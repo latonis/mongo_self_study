@@ -33,9 +33,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Associate Developer Exam.md",
+                "file": "Associate DBA Exam.md",
                 "mode": "source",
-                "source": true
+                "source": false
               }
             }
           }
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Associate Developer Exam.md",
+                "file": "Associate DBA Exam.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Associate Developer Exam.md",
+                "file": "Associate DBA Exam.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Associate Developer Exam.md"
+                "file": "Associate DBA Exam.md"
               }
             }
           }
@@ -169,7 +169,10 @@
   },
   "active": "bcae0c0e9d700a8a",
   "lastOpenFiles": [
+    "Associate Developer Exam.md",
+    "attachments/Pasted image 20230802114319.png",
     "Associate DBA Exam.md",
-    "Associate Developer Exam.md"
+    "attachments",
+    "Pasted image 20230802114241.png"
   ]
 }
