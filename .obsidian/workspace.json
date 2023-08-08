@@ -26,9 +26,17 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "95ab078ebdec0fc2",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -94,7 +102,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Associate DBA Exam.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +118,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Associate DBA Exam.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,9 +139,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Associate DBA Exam.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -155,11 +159,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a9ff0b99be2d9c29",
+  "active": "e7918ab2ef069ebb",
   "lastOpenFiles": [
+    "Associate DBA Exam.md",
     "Associate Developer Exam.md",
     "attachments/Pasted image 20230802114319.png",
-    "Associate DBA Exam.md",
     "attachments",
     "Pasted image 20230802114241.png"
   ]
