@@ -122,6 +122,9 @@ mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
 
 ## MongoDB CRUD Operations
 ### Inserting Documents
-`insertOne()`
+```
+insertOne()
+db.<collection>.insertOne()
+```
 
 `insertMany()`
