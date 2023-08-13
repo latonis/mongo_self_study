@@ -82,3 +82,10 @@ Syntax
 ```
 Value types in a document can be any data type, including str, obj, array, boolean, null, datetime, objectIds, and more.
 Optionally, we can use schema validation.
+
+### Managing Databases, Collections, and Documents in #Atlas
+Atlas Data Explorer allows you to interact and manage data from the UI
+	- Create and View
+		- Document
+		- Collection
+		- Document
