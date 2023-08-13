@@ -127,4 +127,7 @@ insertOne()
 db.<collection>.insertOne()
 ```
 
-`insertMany()`
+```
+insertMany()
+db.<collection>.insertMany()
+```
