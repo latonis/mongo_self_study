@@ -89,3 +89,25 @@ Atlas Data Explorer allows you to interact and manage data from the UI
 		- Document
 		- Collection
 		- Document
+
+## MongoDB connection with Shell
+
+- JS repl environment
+- Can create variables within the shell-```
+```javascript
+const greetingArray = ["hello", "world", "welcome"]
+const loop = (array) => array.forEach(el => console.log(el));
+loop(greetingArray);
+```
+- List Connection Strings
+```bash
+$ atlas clusters connectionStrings describe myAtlasClusterEDU
+> STANDARD CONNECTION STRING
+> mongodb+srv://myatlasclusteredu.xuu09tn.mongodb.net
+
+MY_ATLAS_CONNECTION_STRING=$(atlas clusters connectionStrings describe myAtlasClusterEDU | sed "1 d")
+
+mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
+
+
+```
