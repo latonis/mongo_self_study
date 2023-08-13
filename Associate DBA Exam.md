@@ -52,4 +52,33 @@ db.accounts.find({account_id: 674364})
 
 
 ## MongoDB and the Document Model
-### 
+### Key Terms
+1. Document: basic unit of data in MongoDB
+2. Collection: grouping of documents
+3. Database: container for collections
+	- Database holds collection(s) which holds document(s)
+
+### MongoDB Document Model
+Syntax
+```json
+{
+"key": value,
+"key": value,
+"key" : value
+}
+```
+
+1. BSON is binary json
+	- supports additional types like datetime, numbers, and objectIds 
+		- ObjectId is a datatype used to create unique identifiers for the required `_id_` field in documents
+```json
+{
+"_id": 1,
+"name": "AC3 Phone",
+"colors" : ["black", "silver"],
+"price" : 200,
+"available" : true
+}
+```
+Value types in a document can be any data type, including str, obj, array, boolean, null, datetime, objectIds, and more.
+Optionally, we can use schema validation.
