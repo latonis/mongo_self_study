@@ -111,3 +111,17 @@ mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
 
 
 ```
+
+## Common Errors and Troubleshooting for Connection Errors
+
+`MongoServerSelectionError: connection <monitor> to 34.239.188.169:27017 closed`
+- check if IP address is allowlisted in Atlas, network connection timed out
+`MongoServerError: bad auth : Authentication failed.`
+- check the username and password in the connection string
+- validate credentials are correct
+
+## MongoDB CRUD Operations
+### Inserting Documents
+`insertOne()`
+
+`insertMany()`
