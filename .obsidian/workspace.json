@@ -8,14 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "be348d49d929b8da",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
             "id": "a9ff0b99be2d9c29",
             "type": "leaf",
             "state": {
@@ -27,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -57,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#Atlas",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -156,7 +147,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a9ff0b99be2d9c29",
+  "active": "484734a045288e59",
   "lastOpenFiles": [
     "Associate DBA Exam.md",
     "Associate Developer Exam.md",
