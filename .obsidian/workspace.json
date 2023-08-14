@@ -65,8 +65,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -147,7 +146,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "484734a045288e59",
+  "active": "e7918ab2ef069ebb",
   "lastOpenFiles": [
     "Associate DBA Exam.md",
     "Associate Developer Exam.md",
