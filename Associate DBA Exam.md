@@ -288,3 +288,30 @@ db.sales.find({$or: [
 	-  `["Historical", "Fiction"]`
 	- `"Historical"`
 - when including the same operator more than once in your query, you need to the use explicit `$or` operator
+
+### Replace and Delete Documents
+
+`replaceOne() has three parameters`
+- `filter`: query that matches the document to replace
+- `replacement`: The new document to replace the old one with.
+- `options`: An object that specifies options for the update.
+
+```
+replaceOne()
+
+db.books.replaceOne(
+  {
+    _id: ObjectId("6282afeb441a74a98dbbec4e"),
+  },
+  {
+    title: "Data Science Fundamentals for Python and MongoDB",
+    isbn: "1484235967",
+    publishedDate: new Date("2018-5-10"),
+    thumbnailUrl:
+      "https://m.media-amazon.com/images/I/71opmUBc2wL._AC_UY218_.jpg",
+    authors: ["David Paper"],
+    categories: ["Data Science"],
+  }
+)
+
+```
