@@ -122,6 +122,7 @@ mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
 
 ## MongoDB CRUD Operations
 ### Inserting Documents
+automatically creates the collection if it doesn't exist
 ```
 insertOne()
 db.<collection>.insertOne()
@@ -131,3 +132,4 @@ db.<collection>.insertOne()
 insertMany()
 db.<collection>.insertMany()
 ```
+
