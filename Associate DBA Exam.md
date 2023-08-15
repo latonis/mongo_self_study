@@ -261,9 +261,30 @@ db.sales.find({
   },
 })
 
+db.routes.find({ "airline.name": "Southwest Airlines", stops: { $gte: 1 } })
+
+db.routes.find({
+  $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }],
+})
+
+db.routes.find({
+  $and: [
+    { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
+    { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
+  ]
+})
+
+db.sales.find({ couponUsed: true, purchaseMethod: "Online", "customer.age": { $lte: 25 } })
+
+db.sales.find({$or: [
+	{"items.name": "pens"},
+	{"items.tags": "writing"}	
+]})
+
 ```
 
 `db.books.find({ genre: "Historical" })`
 - can return with scalar value or value in the array
 	-  `["Historical", "Fiction"]`
 	- `"Historical"`
+- when including the same operator more than once in your query, you need to the use explicit `$or` operator
