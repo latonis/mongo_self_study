@@ -235,6 +235,7 @@ db.grades.insertMany([
 	- `$lt`
 	- `$gte`
 	- `$lte`
+	- `$elemMatch`
 `<field>: { <operator>: <value>}`
 
 ```
@@ -249,7 +250,20 @@ db.sales.find({ storeLocation: { $in: ["London", "New York"] } })
 db.sales.find({ "items.price": { $gt: 50}})
 db.sales.find({ "items.price": { $lt: 50}})
 db.sales.find({ "customer.age": { $lte: 65}})
-db.sales.find({ "customer.age": { $gte: 65}})
+db.sales.findOne({ "customer.age": { $gte: 65}})
 
+db.accounts.find({ products: "InvestmentFund"})
+
+
+db.sales.find({
+  items: {
+    $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } },
+  },
+})
 
 ```
+
+`db.books.find({ genre: "Historical" })`
+- can return with scalar value or value in the array
+	-  `["Historical", "Fiction"]`
+	- `"Historical"`
