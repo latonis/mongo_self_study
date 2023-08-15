@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "b51172b18bda7188",
@@ -146,7 +147,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e7918ab2ef069ebb",
+  "active": "a9ff0b99be2d9c29",
   "lastOpenFiles": [
     "Associate DBA Exam.md",
     "Associate Developer Exam.md",
