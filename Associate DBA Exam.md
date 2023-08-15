@@ -228,11 +228,28 @@ db.grades.insertMany([
 
 ### Finding Documents
 - operators
+	- `$eq`
+		- implicit
 	- `$in`
-	- 
+	- `$gt`
+	- `$lt`
+	- `$gte`
+	- `$lte`
+`<field>: { <operator>: <value>}`
+
 ```
 db.<collection>.find({field: value})
 db.<collection>.find({field: {$eq: "value"}})
+db.sales.find({_id: ObjectId("123abc")})
+
 
 db.<collection>.find({field: {$in: ["val1", "val2"]}})
+db.sales.find({ storeLocation: { $in: ["London", "New York"] } })
+
+db.sales.find({ "items.price": { $gt: 50}})
+db.sales.find({ "items.price": { $lt: 50}})
+db.sales.find({ "customer.age": { $lte: 65}})
+db.sales.find({ "customer.age": { $gte: 65}})
+
+
 ```
