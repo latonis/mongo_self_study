@@ -123,7 +123,7 @@ mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
 ## MongoDB CRUD Operations
 ### Inserting Documents
 automatically creates the collection if it doesn't exist
-```bash
+```python
 insertOne()
 db.<collection>.insertOne()
 
@@ -238,7 +238,7 @@ db.grades.insertMany([
 	- `$elemMatch`
 `<field>: { <operator>: <value>}`
 
-```
+```python
 db.<collection>.find({field: value})
 db.<collection>.find({field: {$eq: "value"}})
 db.sales.find({_id: ObjectId("123abc")})
@@ -296,7 +296,7 @@ db.sales.find({$or: [
 - `replacement`: The new document to replace the old one with.
 - `options`: An object that specifies options for the update.
 
-```
+```python
 replaceOne()
 
 db.books.replaceOne(
@@ -333,7 +333,7 @@ db.books.replaceOne(
 		- `$each`
 			- Add each value to an array
 			- `{ $push: { <field>: { $each: [ <value1>, <value2> ... ] } } }`
-```
+``` python
 db.podcasts.updateOne(
   {
     _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8"),
@@ -358,7 +358,7 @@ db.podcasts.updateOne(
 )
 ```
 
-```
+```python
 db.birds.updateOne(
 {_id: ObjectId("6268413c613e55b82d7065d2"},
 {
@@ -371,10 +371,23 @@ db.birds.updateOne(
 - `replacement`: The document to replace the current with
 - `options`: An object that specifies options for the update.
 
-```
+```python
 db.podcasts.findAndModify({
   query: { _id: ObjectId("6261a92dfee1ff300dc80bf1") },
   update: { $inc: { subscribers: 1 } },
   new: true,
 })
+```
+
+`updateMany()`
+- `filter`: query that matches the document to update
+- `update`: The update to make to the document
+- `options`: An object that specifies options for the update.
+```python
+db.books.updateMany(
+  { publishedDate: { $lt: new Date("2019-01-01") } },
+  { $set: { status: "LEGACY" } }
+)
+
+db.birds.updateMany({$or: [{}, {}]})
 ```
