@@ -315,3 +315,42 @@ db.books.replaceOne(
 )
 
 ```
+
+`updateOne() has three parameters`
+- `filter`: query that matches the document to update
+- `update`: The update to make to the document
+- `options`: An object that specifies options for the update.
+	- `upsert` (update or insert)
+		- insert a document with the provided information if matching documents don't exist
+
+Operators:
+- `$set`
+	- Adds new fields and values to a document
+	- Replaces the value of a field with a specified value
+- `$push`
+	- appends a value to an array
+	- Adds the array field with the value as an element if no array present
+```
+db.podcasts.updateOne(
+  {
+    _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8"),
+  },
+
+  {
+    $set: {
+      subscribers: 98562,
+    },
+  }
+)
+
+db.podcasts.updateOne(
+  { title: "The Developer Hub" },
+  { $set: { topics: ["databases", "MongoDB"] } },
+  { upsert: true }
+)
+
+db.podcasts.updateOne(
+  { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
+  { $push: { hosts: "Nic Raboy" } }
+)
+```
