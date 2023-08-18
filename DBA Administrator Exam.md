@@ -677,7 +677,82 @@ db.customers.createIndex({
 ```
 
 ### Compound Indexes
+Use `createIndex()` to create a new index in a collection. Within the parentheses of `createIndex()`, include an object that contains two or more fields and their sort order.
 
+```
+db.customers.createIndex({
+  active:1, 
+  birthdate:-1,
+  name:1
+})
+```
+
+The order of the fields matters when creating the index and the sort order. It is recommended to list the fields in the following order: Equality, Sort, and Range.
+
+- Equality: field/s that matches on a single field value in a query
+- Sort: field/s that orders the results by in a query
+- Range: field/s that the query filter in a range of valid values
+
+The following query includes an equality match on the active field, a sort on birthday (descending) and name (ascending), and a range query on birthday too.
+
+```
+db.customers.find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+    active:true
+    }).sort({
+      birthdate:-1, 
+      name:1
+      })
+```
+
+Here's an example of an efficient index for this query:
+
+```
+db.customers.createIndex({
+  active:1, 
+  birthdate:-1,
+  name:1
+})
+```
+
+### Deleting Index
+Use `dropIndex()` to delete an existing index from a collection. Within the parentheses of `dropIndex()`, include an object representing the index key or provide the index name as a string.
+
+Delete index by name:
+
+```
+db.customers.dropIndex(
+  'active_1_birthdate_-1_name_1'
+)
+```
+
+Delete index by key:
+
+```
+db.customers.dropIndex({
+  active:1,
+  birthdate:-1, 
+  name:1
+})
+```
+
+Use `dropIndexes()` to delete all the indexes from a collection, with the exception of the default index on _id.
+
+```
+db.customers.dropIndexes()
+```
+
+The `dropIndexes()` command also can accept an array of index names as a parameter to delete a specific list of indexes.
+
+```
+db.collection.dropIndexes([
+  'index1name', 'index2name', 'index3name'
+  ])
+```
+
+The `hideIndex()` command hides an index. By hiding an index, you'll be able to assess the impact of removing the index on query performance. MongoDB does not use hidden indexes in queries but continues to update their keys. This allows you to assess if removing the index affects the query performance and unhide the index if needed. Unhiding an index is faster than recreating it. In this example, you would use the command `db.customers.hideIndex({email:1})`.
 ## MongoDB Atlas Search
 
 ## MongoDB Data Modeling Intro
