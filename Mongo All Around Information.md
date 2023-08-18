@@ -484,6 +484,19 @@ db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 6
 - Aggregation: collection and summary of data
 - Stage: built-in method to compute data but not alter, akin to stream
 - Aggregation pipeline: series of stages completed on the data in order
+```python
+db.collection.aggregate([
+    {
+        $stage1: {
+            { expression1 },
+            { expression2 }...
+        },
+        $stage2: {
+            { expression1 }...
+        }
+    }
+])
+```
 
 ## MongoDB Indexes
 
