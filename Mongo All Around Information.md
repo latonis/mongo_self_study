@@ -537,24 +537,86 @@ db.sightings.aggregate([ { $match: { species_common: 'Eastern Bluebird' } }, { $
 ### `$sort`
 ```
 {
-  $group:
-    {
-      _id: <expression>, // Group key
-      <field>: { <accumulator> : <expression> }
+    $sort: {
+        "field_name": 1
     }
- }
+}
 ```
 
 ### `$limit`
 ```
 {
-  $group:
-    {
-      _id: <expression>, // Group key
-      <field>: { <accumulator> : <expression> }
-    }
- }
+  $limit: 5
+}
 ```
+
+```
+db.zips.aggregate([
+{
+  $sort: {
+    pop: -1
+  }
+},
+{
+  $limit:  5
+}
+])
+
+
+```
+
+### `$project`
+The `$project` stage specifies the fields of the output documents.
+```
+{
+    $project: {
+        state:1, 
+        zip:1,
+        population:"$pop",
+        _id:0
+    }
+}
+```
+
+### `$count`
+The `$count` stage creates a new document, with the number of documents at that stage in the aggregation pipeline assigned to the specified field name.
+```
+{
+  $count: "total_zips"
+}
+```
+
+### `$set`
+The `$set` stage creates new fields or changes the value of existing fields, and then outputs the documents with the new fields.
+```
+{
+    $set: {
+        place: {
+            $concat:["$city",",","$state"]
+        },
+        pop:10000
+     }
+  }
+```
+
+```
+db.sightings.aggregate([ { $project: { _id: 0, species_common: 1, date: 1 } } ])
+
+db.birds.aggregate([ { $set: { 'class': 'bird' } } ])
+```
+
+### `$out`
+Write the documents that are returned by an aggregation pipeline into a collection
+- must be the last stage
+```
+{
+    $set: {
+        place: {
+            $concat:["$city",",","$state"]
+        },
+        pop:10000
+     }
+  }
 
 ## MongoDB Indexes
 
