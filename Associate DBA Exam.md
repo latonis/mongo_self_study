@@ -440,7 +440,7 @@ db.collection.find( <query>, <projection> )
 ```
 
 #### Include a Field
-```
+```python
 db.collection.find( <query>, { <field> : 1 })
 
 // Return all restaurant inspections - business name, result, and _id fields only
@@ -448,15 +448,34 @@ db.inspections.find(
   { sector: "Restaurant - 818" },
   { business_name: 1, result: 1 }
 )
+
+db.sales.find({ storeLocation: "Denver", }, { storeLocation: 1, saleDate: 1, purchaseMethod: 1 })
 ```
 
 #### Exclude a Field
-```
-db.collection.find( <query>, { <field> : 1 })
+```python
+db.collection.find(query, { <field> : 0, <field>: 0 })
 
-// Return all restaurant inspections - business name, result, and _id fields only
+
+// Return all inspections with result of "Pass" or "Warning" - exclude date and zip code
 db.inspections.find(
-  { sector: "Restaurant - 818" },
-  { business_name: 1, result: 1 }
+  { result: { $in: ["Pass", "Warning"] } },
+  { date: 0, "address.zip": 0 }
 )
+
+db.sales.find({ "customer.age": { $lt: 30 }, "customer.satisfaction": { $gt: 3 }, }, { "customer.satisfaction": 1, "customer.age": 1, "storeLocation": 1, "saleDate": 1, "_id": 0, });
+
+db.sales.find({ storeLocation: { $in: ["Seattle", "New York"] } }, {purchaseMethod: 0, customer: 0, couponUsed: 0})
+```
+
+### Counting Documents in a MongoDB Collection
+```python
+db.collection.countDocuments( <query>, <options> )
+
+// Count number of docs in trip collection
+db.trips.countDocuments({})
+
+db.trips.countDocuments({ tripduration: { $gt: 120 }, usertype: "Subscriber" })
+
+db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 600 } } } } ) 
 ```
