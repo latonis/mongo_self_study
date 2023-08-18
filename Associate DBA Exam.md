@@ -330,6 +330,9 @@ Operators:
 - `$push`
 	- appends a value to an array
 	- Adds the array field with the value as an element if no array present
+	- `$each`
+		- Add each value to an array
+		- `{ $push: { <field>: { $each: [ <value1>, <value2> ... ] } } }`
 ```
 db.podcasts.updateOne(
   {
@@ -352,5 +355,13 @@ db.podcasts.updateOne(
 db.podcasts.updateOne(
   { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
   { $push: { hosts: "Nic Raboy" } }
+)
+```
+
+```
+db.birds.updateOne(
+{_id: ObjectId("6268413c613e55b82d7065d2"},
+{
+	$set: {tags: ["geese", "herbivore", "migration"]}},
 )
 ```
