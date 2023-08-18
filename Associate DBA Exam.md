@@ -407,3 +407,56 @@ db.podcasts.deleteMany({category: “crime”})
 
 ## Modifying Query Results
 ### Sorting and Limiting Query Results in MongoDB
+#### Sorting Results
+- Descending order: `-1`
+- Ascending order: `1`
+```python
+db.collection.find(<query>).sort(<sort>)
+
+db.companies.find({ category_code: "music" }).sort({ name: 1 });
+
+db.companies.find({ category_code: "music" }).sort({ name: 1, _id: 1 });
+
+```
+
+#### Limiting Results
+```python
+db.companies.find(<query>).limit(<number>)
+db.companies.find() # for all companies
+
+// Return the three music companies with the highest number of employees. Ensure consistent sort order.
+db.companies
+  .find({ category_code: "music" })
+  .sort({ number_of_employees: -1, _id: 1 })
+  .limit(3);
+
+db.sales.find({storeLocation: "London", "items.name": {$in: ["laptop", "backpack", "printer paper"]}})
+```
+
+
+### Returning Specific Data from a Query in MongoDB
+```
+db.collection.find( <query>, <projection> )
+```
+
+#### Include a Field
+```
+db.collection.find( <query>, { <field> : 1 })
+
+// Return all restaurant inspections - business name, result, and _id fields only
+db.inspections.find(
+  { sector: "Restaurant - 818" },
+  { business_name: 1, result: 1 }
+)
+```
+
+#### Exclude a Field
+```
+db.collection.find( <query>, { <field> : 1 })
+
+// Return all restaurant inspections - business name, result, and _id fields only
+db.inspections.find(
+  { sector: "Restaurant - 818" },
+  { business_name: 1, result: 1 }
+)
+```
