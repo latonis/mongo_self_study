@@ -323,16 +323,16 @@ db.books.replaceOne(
 	- `upsert` (update or insert)
 		- insert a document with the provided information if matching documents don't exist
 
-Operators:
-- `$set`
-	- Adds new fields and values to a document
-	- Replaces the value of a field with a specified value
-- `$push`
-	- appends a value to an array
-	- Adds the array field with the value as an element if no array present
-	- `$each`
-		- Add each value to an array
-		- `{ $push: { <field>: { $each: [ <value1>, <value2> ... ] } } }`
+	Operators:
+	- `$set`
+		- Adds new fields and values to a document
+		- Replaces the value of a field with a specified value
+	- `$push`
+		- appends a value to an array
+		- Adds the array field with the value as an element if no array present
+		- `$each`
+			- Add each value to an array
+			- `{ $push: { <field>: { $each: [ <value1>, <value2> ... ] } } }`
 ```
 db.podcasts.updateOne(
   {
@@ -364,4 +364,17 @@ db.birds.updateOne(
 {
 	$set: {tags: ["geese", "herbivore", "migration"]}},
 )
+```
+
+`findAndModify()`
+- `filter`: query that matches the document to update
+- `replacement`: The document to replace the current with
+- `options`: An object that specifies options for the update.
+
+```
+db.podcasts.findAndModify({
+  query: { _id: ObjectId("6261a92dfee1ff300dc80bf1") },
+  update: { $inc: { subscribers: 1 } },
+  new: true,
+})
 ```
