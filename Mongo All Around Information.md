@@ -477,5 +477,17 @@ db.trips.countDocuments({})
 
 db.trips.countDocuments({ tripduration: { $gt: 120 }, usertype: "Subscriber" })
 
-db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 600 } } } } ) 
+db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 600 } } } } ) # when querying for multiple items to be true, need #elemMatch
 ```
+
+## MongoDB Aggregation
+
+## MongoDB Indexes
+
+## MongoDB Atlas Search
+
+## MongoDB Data Modeling Intro
+
+## MongoDB Transactions
+
+# Mongo DBA Specific Content
