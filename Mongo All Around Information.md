@@ -498,6 +498,64 @@ db.collection.aggregate([
 ])
 ```
 
+### `$match`
+```
+{
+  $match: {
+     "field_name": "value"
+  }
+}
+```
+### `$group`
+```
+{
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+```
+
+```python
+db.zips.aggregate([
+{   
+   $match: { 
+      state: "CA"
+    }
+},
+{
+   $group: {
+      _id: "$city",
+      totalZips: { $count : { } }
+   }
+}
+])
+
+db.sightings.aggregate([ { $match: { species_common: 'Eastern Bluebird' } }, { $group: { _id: '$location.coordinates', number_of_sightings: { $count: {} } } } ])
+```
+### `$sort`
+```
+{
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+```
+
+### `$limit`
+```
+{
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+```
+
 ## MongoDB Indexes
 
 ## MongoDB Atlas Search
