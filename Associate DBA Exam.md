@@ -389,5 +389,21 @@ db.books.updateMany(
   { $set: { status: "LEGACY" } }
 )
 
-db.birds.updateMany({$or: [{}, {}]})
+db.birds.updateMany(
+	{$or: [ {name: "abc"}, {name: "xyz"} ] },
+	{ $set: { status: "LEGACY" } }
+)
 ```
+
+`deleteOne()`
+```python
+db.podcasts.deleteOne({ _id: Objectid("6282c9862acb966e76bbf20a") })
+```
+
+`deleteMany()`
+```python
+db.podcasts.deleteMany({category: “crime”})
+```
+
+## Modifying Query Results
+### Sorting and Limiting Query Results in MongoDB
