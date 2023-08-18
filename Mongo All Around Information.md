@@ -618,11 +618,15 @@ Write the documents that are returned by an aggregation pipeline into a collecti
      }
   }
 
+db.sightings.aggregate([ { $match: { date: { $gte: ISODate('2022-01-01T00:00:00.0Z'), $lt: ISODate('2023-01-01T00:00:00.0Z') } } }, { $out: 'sightings_2022' } ]) db.sightings_2022.findOne()
+
+```
 ## MongoDB Indexes
 
 ## MongoDB Atlas Search
 
 ## MongoDB Data Modeling Intro
+![[Pasted image 20230818123605.png]]
 
 ## MongoDB Transactions
 
