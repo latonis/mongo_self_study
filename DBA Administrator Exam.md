@@ -940,6 +940,8 @@ db.getSiblingDB('test_data').users.insertMany(users)
 ```
 
 ## Self-Managed Upgrades & Maintenance
+`Pre-production` environment for index tests
+Rolling maintenance for index creation, upgrading MongoDB, and upgrading OS
 
 # Mongo DBA Specific Content
 
