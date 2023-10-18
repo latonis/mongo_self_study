@@ -851,5 +851,95 @@ Once the editor is set, you can then use `edit` to modify a new or existing co
 ```
 edit giveMeADate
 ```
+
+### MongoDB Shell Library (.mongoshrc.js)
+The `.mongoshrc.js` file can be used to run code when `mongosh` starts. This file doesn't exist unless you create it. To create the file, run the following command in your home directory:
+
+```
+touch ~/.mongoshrc.js
+```
+
+`db.adminCommand()` is used to run administrative commands against the `admin` database, which we can write helper functions for and then add them directly to the `.mongoshrc.js` file. For example, the following code shows a lengthy command to get the server's compatibility version wrapped in a helper function called `fcv()`. This function is added to the global scope of `mongosh` by adding the function directly to the the `.mongoshrc.js` file:
+
+```
+const fcv = () => db.adminCommand({getParameter: 1, featureCompatibilityVersion: 1})
+```
+
+We can also use the `.mongoshrc.js` file to customize the prompt. For example, we can customize the prompt to display information about the current `mongosh` session by using the `prompt()` function. For example, the following code displays the database name, the current user, and the read preference in the prompt:
+
+```javascript
+prompt = () => {
+ let returnString = "";
+ const dbName = db.getName();
+ const isEnterprise = db.serverBuildInfo().modules.includes("enterprise");
+ const mongoURL = db.getMongo()._uri.includes("mongodb.net");
+ const nonAtlasEnterprise = isEnterprise && !mongoURL;
+ const usingAtlas = mongoURL && isEnterprise;
+ const readPref = db.getMongo().getReadPrefMode();
+ const isLocalHost = /localhost|127\.0\.0\.1/.test(db.getMongo()._uri);
+ const currentUser = db.runCommand({ connectionStatus: 1 }).authInfo
+   .authenticatedUsers[0]?.user;
+ if (usingAtlas) {
+   returnString += `Atlas || ${dbName} || ${currentUser} || ${readPref} || =>`;
+ } else if (isLocalHost) {
+   returnString += `${
+     nonAtlasEnterprise ? "Enterprise || localhost" : "localhost"
+   } || ${dbName} || ${readPref} || =>`;
+ } else if (nonAtlasEnterprise) {
+   returnString += `Enterprise || ${dbName} || ${currentUser} || ${readPref} || =>`;
+ } else {
+   returnString += `${dbName} || ${readPref} || =>`;
+ }
+ ret
+```
+
+
+### Shell Tips and Tricks
+
+`mongosh` provides access to all native Node.js APIs, including the file system module, or `fs`. This means that you can use `mongosh` to read and write files. In the following example, we assign the result of a query to a variable called `customers` so that it can be used later:
+
+```
+const customers = db.sales.aggregate([
+ {
+   $project: {
+     _id: 0,
+     customer: 1
+   }
+ }
+]).toArray()
+```
+
+Next, we use the `fs` module to write the results of the query to a file called `customers.json`. To do this, we pass in the `customers` variable and use the `EJSON.stringify()` method to convert the array to a string. We also use the `null` and `2` parameters to format the output so that it’s easier to read:
+
+```
+fs.writeFileSync('customers.json', EJSON.stringify(customers, null, 2));
+```
+
+You can also use `npm` packages in `mongosh`, as they support external scripts and `require` statements. In the following example, we use the faker package to generate an array of 10 fake users:
+
+```
+const faker = require('faker');
+
+
+for (let i = 0; i < 10; i++) {
+ users.push({
+   name: faker.name.findName(),
+   email: faker.internet.email(),
+   phone: faker.phone.phoneNumber(),
+   address: faker.address.streetAddress()
+ })
+}
+```
+
+**Note:** To use the faker package, you must first install it by using `npm install faker` in the same directory as your external script. Or, you can install the package globally by using `npm install -g faker`.
+
+Finally, you can use the `users` array to insert multiple documents into a new database and collection, as shown in the following example:
+
+```
+db.getSiblingDB('test_data').users.insertMany(users)
+```
+
+## Self-Managed Upgrades & Maintenance
+
 # Mongo DBA Specific Content
 
