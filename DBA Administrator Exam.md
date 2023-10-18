@@ -943,5 +943,12 @@ db.getSiblingDB('test_data').users.insertMany(users)
 `Pre-production` environment for index tests
 Rolling maintenance for index creation, upgrading MongoDB, and upgrading OS
 
+Upgrades must be sequential, 5.0 -> 6.0 -> 7.0, not 5.0 -> 7.0
+
+`fcv()` -> `featureCompabilityVersion`
+
+![[Pasted image 20231018181830.png]]
+- oplog window is maximum of how long maintenance can take without performing an initial sync
+`rs.stepDown()`  to elect a new primary`
 # Mongo DBA Specific Content
 
