@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "b51172b18bda7188",
@@ -150,11 +149,11 @@
   "active": "fb032f1bd1fbb988",
   "lastOpenFiles": [
     "Associate Developer Exam.md",
+    "DBA Administrator Exam.md",
+    "attachments/Pasted image 20230802114319.png",
+    "attachments/Pasted image 20230818123605.png",
     "Untitled.md",
     "2023-08-14.md",
-    "DBA Administrator Exam.md",
-    "attachments/Pasted image 20230818123605.png",
-    "attachments/Pasted image 20230802114319.png",
     "attachments",
     "Pasted image 20230802114241.png"
   ]

@@ -758,6 +758,68 @@ The `hideIndex()` command hides an index. By hiding an index, you'll be able t
 ## MongoDB Data Modeling Intro
 ![[Pasted image 20230818123605.png]]
 
-## MongoDB Transactions
+## MongoDB Shell
 
+```sh
+apt update 
+apt install <code>gnupg</code>
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+```
+
+```sh
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu 
+focal/mongodb-org/6.0 multiverse" | sudo tee 
+/etc/apt/sources.list.d/mongodb-org-6.0.list
+```
+
+```sh
+apt update
+apt install -y mongodb-mongosh
+```
+
+```
+config
+```
+
+The available configuration options are as follows:
+
+```
+- `displayBatchSize` - The number of documents to display when using the `it` iterator.
+- `maxTimeMS` - The maximum amount of time to allow a query to run.
+- `enableTelemetry` - Whether to enable telemetry.
+- `editor` - The editor to use when editing code.
+- `snippetIndexSourceURLs` - The URLs to use when fetching snippet index files.
+- `snippetRegistryURL` - The URL to use when fetching snippet registry files.
+- `snippetAutoload` - Whether to automatically load snippets.
+- `inspectCompact` - Whether to use compact mode when inspecting objects.
+- `inspectDepth` - The maximum depth to use when inspecting objects.
+- `historyLength` - The number of history entries to keep.
+- `showStackTraces` - Whether to show stack traces when errors occur.
+- `redactHistory` - Whether to redact sensitive information from history.
+```
+
+`config.get(<field>) -> config.get('enableTelemetry') returns the bool value
+`config.set(<field>)` to set config values
+
+```
+- Windows: `mongosh.cfg`, in the same directory as the `mongosh.exe` binary.
+- macOS:
+ - `/usr/local/etc/mongosh.conf`
+ - `/etc/mongosh.conf`
+ - `/opt/homebrew/etc/mongosh.conf`
+- Linux: `/etc/mongosh.conf`
+```
+
+Finally, you can set configuration options in `mongosh` by using the `--eval` flag with a command. For example, to disable telemetry, you would run the following command to invoke the `disableTelemetry()` function:
+
+```
+mongosh --eval "disableTelemetry()"
+```
+
+You can also use the `--eval` flag to run queries and other commands. For example, to run a query for some documents, you would run the following command:
+
+```
+mongosh --eval "db.accounts.find().limit(3)" --quiet
+```
 # Mongo DBA Specific Content
+
