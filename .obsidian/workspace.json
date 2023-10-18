@@ -18,19 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "1ad9a5142b81d7a3",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.4.11"
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -158,7 +147,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1ad9a5142b81d7a3",
+  "active": "fb032f1bd1fbb988",
   "lastOpenFiles": [
     "Associate Developer Exam.md",
     "Untitled.md",
