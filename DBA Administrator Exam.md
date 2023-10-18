@@ -821,5 +821,35 @@ You can also use the `--eval` flag to run queries and other commands. For exam
 ```
 mongosh --eval "db.accounts.find().limit(3)" --quiet
 ```
+
+To run an external script in `mongosh`, use the `load()` method. For example, to run the `randomPost.js` file, you would run the following code:
+
+```
+load('randomPost.js')
+```
+
+Within your script, you can use the `db.getSiblingDB()` method to access a database without having to switch to it in `mongosh`. For example, here’s how you would access the `sample_training` database in the `randomPost.js` script:
+
+```
+db = db.getSiblingDB("sample_training");
+console.log(`\nCurrent database: ${db.getName()}`);
+console.log("Random post sample of 500 words:\n");
+let result = db.posts.aggregate({
+ $sample: { size: 1 },
+});
+printjson(result.next().body.slice(0, 500) + " ...");
+```
+
+To edit a function or command in an external text editor, like Vim or nano, while using `mongosh`, use the `edit` command. To use this command, you must first set the `config.editor` value in `mongosh`. To do so, use the `config.set()` method:
+
+```
+config.set("editor", "vim")
+```
+
+Once the editor is set, you can then use `edit` to modify a new or existing command. For example, to edit the `giveMeADate` function, you would run the following code:
+
+```
+edit giveMeADate
+```
 # Mongo DBA Specific Content
 
