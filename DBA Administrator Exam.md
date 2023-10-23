@@ -950,5 +950,292 @@ Upgrades must be sequential, 5.0 -> 6.0 -> 7.0, not 5.0 -> 7.0
 ![[Pasted image 20231018181830.png]]
 - oplog window is maximum of how long maintenance can take without performing an initial sync
 `rs.stepDown()`  to elect a new primary`
+
+## MongoDB Logging Basics
+Downloading logs requires the “Project Data Access Read Only” role or greater in MongoDB Atlas. To determine if your Atlas user has this role, run the following command in the Atlas CLI:
+
+```
+atlas project users list -o json
+```
+
+This command returns a JSON object for each member of the project. This output uses the Atlas API role names, so look for the equivalent role for “Project Data Access Read Only,” which is called `GROUP_DATA_ACCESS_READ_ONLY`.
+
+To download logs by using the Atlas CLI, use the following command:
+
+```
+atlas logs <hostname> <file>
+```
+
+For example, if you want to download the `mongod` log file for the past 30 days from the primary node of your Atlas cluster, you would run the following:
+
+```
+atlas logs download uml3-shard-00-00.xwgj1.mongodb.net mongodb.gz
+```
+
+Log files will be compressed in a `.gz` archive. To extract a `.gz` archive in Linux, use the following command:
+
+```
+gunzip mongodb.log.gz
+```
+
+
+### Self Managed Instances
+## Default Location on Linux
+
+On Linux, the MongoDB log file is found in the following directory by default and is named `mongod.log`:
+
+```
+/var/log/mongodb/mongod.log
+```
+
+## Check Permissions of the Log File
+
+To check the file permissions of the `mongod.log` file, use the `ls` command, which lists all files and subdirectories in the current directory. When `ls` is used with the `-l` option, long format is used. This option includes the user and group that can access the file.
+
+```
+> ls -l /var/log/mongodb/mongod.log
+```
+
+## Access the Log File
+
+To access the log file, prepend the `sudo` command to the directory name. The following example uses the `head` command to print the first five lines of the `mongod.log` file:
+
+```
+sudo head -5 /var/log/mongodb/mongod.log
+```
+
+If the log file is not in its default location, check the `mongod.conf` file to determine if an alternate path was provided. The following example uses the `cat` command to check the value of the `systemLog.path` property:
+
+```
+sudo cat /etc/mongod.conf
+```
+
+## Retrieve Log Messages
+
+To show recent global log messages from the RAM cache in `mongosh`, use the `show log` helper and provide it with one of the available filters, such as `global` or `startupWarnings`.
+
+```
+show log <type>
+```
+
+To view the available filters that can be provided to the `show log` helper, use the following helper command in `mongosh`:
+
+```
+show logs
+```
+
+The `mongosh` helper `show log global` internally calls the `getLog` command to return recent log messages from the RAM cache:
+
+```
+db.adminCommand( { getLog:'global'} )
+```
+
+- The path for the log file can be found by viewing the value provided to the `--logpath` argument when viewing the mongod process information with a command such as `ps aux | grep mongod`
+- The path for the log file can be found by checking the systemLog.path value in the `mongod.conf` file.
+
+```
+show log startupWarnings
+```
+
+## Set a slowms Threshold
+
+To set a `slowms` threshold for an M10-or-above Atlas cluster or a self-managed MongoDB deployment, use the `db.setProfilingLevel()` method in `mongosh`. This method accepts two parameters: the profiler level and an options object. The profiler level is set to `0` to disable profiling completely, set to `1` for profiling operations that take longer than the threshold, and set to `2` for profiling all operations.
+
+In the following example, the command leaves the profile disabled but changes the `slowms` threshold to 30 milliseconds:
+
+```
+db.setProfilingLevel(0, { slowms: 30 })
+```
+
+**Note:** When the profiler is disabled, `db.setProfilingLevel()` configures which slow operations are written to the diagnostic log.
+
+## Find Slow Operations in a Log
+
+The following example shows how to find slow operations in a log file.
+
+First, find a specific document in the `listingsAndReviews` collection by running the following code:
+
+```
+db.listingsAndReviews.findOne({ "host.host_id": '1282196'})
+```
+
+Then find all documents sorted by the number of listings by running the following code. Without an index, the query will be slow.
+
+```
+db.listingsAndReviews.find({}).sort( {"host.host_total_listings_count":-1})
+```
+
+To find log messages related to slow operations, use the `grep` command to find instances of the phrase `“Slow query”`, and then pipe the result into `jq`, a utility for processing and pretty-printing JSON:
+
+```
+sudo grep "Slow query" /var/log/mongodb/mongod.log | jq
+```
+
+## Set the Verbosity Level
+
+The following code sets the verbosity level on a self-managed instance by using the configuration file.
+
+First, open the file in the Vim text editor to make some changes:
+
+```
+vim /etc/mongod.conf
+```
+
+To set a global verbosity level for all components, add the following property to the `mongod.conf` file under the `systemLog` section:
+
+```
+...
+systemLog:
+  verbosity: 1
+...
+```
+
+To set the verbosity level for a single component, add the following to the `systemLog` section of the file:
+
+```
+...
+systemLog:
+  ...
+  component:
+    index:
+      verbosity: 1
+...
+```
+
+Restart the `mongod` service on a Linux environment that is managed by `systemctl` by using the following command:
+
+```
+sudo systemctl mongod restart
+```
+
+## Generate Log Messages Related to Slow Operations
+
+To generate log messages related to the index component, create an index on the `host` field to support the slow query. To do so, use the `createIndex()` method in `mongosh`. This command also uses the `--eval` parameter, which allows you to immediately pass commands to `mongosh` without entering the shell. The `--quiet` option reduces noise in the output.
+
+```
+"mongodb://localhost:27017/sample_airbnb" --quiet --eval "db.listingsAndReviews.createIndex({ host: 1 })"
+```
+
+To find log messages related to the `INDEX` component, use the following command:
+
+```
+sudo grep INDEX /var/log/mongodb/mongod.log | jq
+```
+
+## Rotating Logs
+
+To rotate logs for a self-managed `mongod` deployment, use the `db.adminCommand()` in `mongosh`:
+
+```
+db.adminCommand( { logRotate : 1 } )
+```
+
+Alternatively, you can issue the `SIGUSR1` signal to the `mongod` process with the following command:
+
+```
+sudo kill -SIGUSR1 $(pidof mongod)
+```
+
+## Rotating Logs Using Rename and Reopen
+
+To start `mongod` with MongoDB’s standard `rename` log rotation behavior, invoke the daemon with the `--logpath` argument. Even though `rename` is not explicitly specified, it’s the default if the `--logpath` argument is used:
+
+```
+> mongod -v --logpath /var/log/mongodb/server1.log
+```
+
+To start the `mongod` process with the `reopen` approach, invoke the daemon with the `--logpath`, `--logRotate`, and `--logappend` command-line arguments:
+
+- `--logpath` sends all diagnostic logging information to a log file
+- `--logappend` appends new entries to the end of the existing log file
+- `--logRotate` determines the behavior for the `logRotate` command (`rename` or `reopen`)
+
+```
+mongod -v --logpath /var/log/mongodb/server1.log --logRotate reopen --logappend
+```
+
+## Automating Log Rotation with the logrotate Service
+
+To automate the rotation of MongoDB logs by using the Linux `logrotate` service, first make the following changes to the `mongod.conf` file. Open the file in Vim or another text editor by using the following command:
+
+```
+sudo vim /etc/mongod.conf
+```
+
+In the configuration file, add the following lines to enable the `reopen` method of log rotation and append new lines to the re-opened file:
+
+```
+...
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+  logRotate: reopen
+...
+```
+
+To leverage the `logrotate` service in Linux, create a script that provides instructions to `logrotate`, located in the `etc` directory for the `logrotate` service:
+
+```
+sudo vim /etc/logrotate.d/mongod.conf
+```
+
+To configure `logrotate` to send a `SIGUSR1` signal to `mongod` once per day, or when the file size reaches 10 MB, use the following configuration.
+
+**Note:** The MongoDB configuration file and the `logrotate` script have the same filename. The following file should be created in `/etc/logrotate.d/` and named `mongod.conf`.
+
+```
+/var/log/mongodb/mongod.log {
+   daily 
+   size 
+   rotate 10 
+   missingok
+   compress 
+   compresscmd /usr/bin/bzip2 
+   uncompresscmd /usr/bin/bunzip2 # command to uncompress the file
+   compressoptions -9 # options for the compression utility
+   compressext .bz2 # file format of the compressed archive
+   delaycompress # wait to compress files until it's an opportune time
+   notifempty # don't bother compressing if the log file is empty
+   create 640 mongodb mongodb # creates the log  file with specific permissions
+   sharedscripts # don't run multiple rotations at once
+   postrotate # tell mongod to rotate, remove empty files
+       /bin/kill -SIGUSR1 `cat /var/run/mongodb/mongod.pid 2>/dev/null` >/dev/null 2>&1
+       find /var/log/mongodb -type f -size 0 -regextype posix-awk -regex "^\/var\/log\/mongodb\/mongod\.log\.[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}$" -execdir rm {} \; >/dev/null 2>&1
+   endscript # end of the script
+}
+```
+
+With the `logrotate` file in place, restart the `mongod` service by using the following command:
+
+```
+sudo systemctl restart mongod
+```
+
+## Testing the logrotate Configuration
+
+To test the `logrotate` configuration, use the `tail` command on the `mongod.log` file while issuing a `SIGUSR1` signal to the `mongod` process:
+
+View the `mongod.log` file in real time by using the following code:
+
+```
+sudo tail -F /var/log/mongodb/mongod.log
+```
+
+  
+
+Then tell `mongod` process to rotate the logs:
+
+```
+sudo kill -SIGUSR1 $(pidof mongod)
+```
+
+  
+
+In the `mongod.log` file, notice the following line, indicating that the log was reopened. Depending on your distribution of Linux, the language in this line may vary.
+
+```
+tail: /var/log/mongodb/mongod.log: file truncated;
+```
 # Mongo DBA Specific Content
 

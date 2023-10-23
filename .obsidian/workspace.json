@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "572fe5123372d368",
+        "id": "b269bb4544391adf",
         "type": "tabs",
         "children": [
           {
-            "id": "90b60ff87a265722",
+            "id": "286f5f9b9705c168",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -138,7 +138,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "90b60ff87a265722",
+  "active": "286f5f9b9705c168",
   "lastOpenFiles": [
     "DBA Administrator Exam.md",
     "attachments/Pasted image 20231018181830.png",
