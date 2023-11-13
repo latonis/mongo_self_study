@@ -1237,5 +1237,44 @@ In the `mongod.log` file, notice the following line, indicating that the log w
 ```
 tail: /var/log/mongodb/mongod.log: file truncated;
 ```
-# Mongo DBA Specific Content
 
+## Self-Managed Backup and Recovery
+### Backup Plans on a MongoDB Server
+- Recovery Point Objective (RPO)
+	- Definition: Maximum acceptable amount of data loss that a business is willing to tolerate in the event of a disruption, expressed as an amount of time
+	- Determined by:
+		- criticality of data
+		- time and effort required to recreate or re-center lost data
+		- cost of downtime
+- Recovery Time Objective (RTO)
+	- Definition: Maximum amount of time that a business can tolerate after an outage before the disruption makes normal business operations intolerable
+	- Determined by:
+		- criticality of the systems
+		- recovery process
+		- availability of resources
+		- cost of downtime
+### Filesystem Snapshots on a MongoDB Server
+- Snapshots work by creating pointers between a source volume and a snapshot volume
+- Snapshot volume is a point-in-time read-only view of a source volume
+- A volume is a container with a filesystem that allows us to store and access data
+- Snapshots can be created with different tools
+	- Logical Volume Manager for Linux
+	- MongoDB Ops Manager
+	- MongoDB Atlas
+	- Most cloud providers also offer their own
+- Lock the database with `fsyncLock()` which flushes all pending writes, prevents additional writes, perform backup and then unlock with `fsyncUnlock()`
+- The source volume may contain more than just your MongoDB deployment
+	- isolate the MongoDB deployment
+- Journal may be separated from deployment for performance reasons
+	- journal is a sequential, binary transaction log that is used to bring the database into a valid state in the event of a hard shutdown
+	- If the journal is not part of the snapshot, it will be incomplete
+- After a snapshot is created, extract the data for offline storage
+	- Snapshot volume archive
+		- Take a complete copy of the source volume, plus any changes that occurred while the snapshot was being created
+		- use the `dd` utility
+		- bigger size
+	- File system archive
+		- Mount the snapshot
+		- Use filesystems to archive
+		- `tar`, etc
+	- Using either may depend on type of data, performance requirements, size, etc.
