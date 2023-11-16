@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "3ee08362d310488b",
+        "id": "02554bd71aff06b8",
         "type": "tabs",
         "children": [
           {
-            "id": "2514b244352cc570",
+            "id": "62e6a2fb9693ff8d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DBA Administrator Exam.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DBA Administrator Exam.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DBA Administrator Exam.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "DBA Administrator Exam.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,7 +138,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2514b244352cc570",
+  "active": "62e6a2fb9693ff8d",
   "lastOpenFiles": [
     "DBA Administrator Exam.md",
     "attachments/Pasted image 20231018181830.png",
