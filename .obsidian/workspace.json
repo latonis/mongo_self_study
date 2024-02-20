@@ -4,17 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "7a6e267169dbbdd8",
+        "id": "5cf7017367673016",
         "type": "tabs",
         "children": [
           {
-            "id": "5486b6d1abd4ede0",
+            "id": "799215dbc02ba08c",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.5.3"
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -140,7 +138,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "5486b6d1abd4ede0",
+  "active": "799215dbc02ba08c",
   "lastOpenFiles": [
     "DBA Administrator Exam.md",
     "Associate Developer Exam.md",
